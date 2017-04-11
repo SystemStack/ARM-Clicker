@@ -1,1 +1,7 @@
 /* CSS declarations go here */
+h1, h2 {
+  text-align:center;
+  font-family: "Helvetica";
+  /* ASCII codes of (A,R,M) */
+  color: #658277;
+}
