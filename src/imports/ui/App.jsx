@@ -6,7 +6,6 @@ import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 // App component - represents the whole app
 export default class App extends Component {
 
-
   getClicks() {
     return [
       { _id: 1,
