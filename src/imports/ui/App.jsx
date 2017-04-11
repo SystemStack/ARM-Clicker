@@ -5,9 +5,14 @@ import Click from './Click.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 // App component - represents the whole app
 export default class App extends Component {
+
   getClicks() {
     return [
-      { _id: 1, clickCount: 1, username: "levi.broadnax", created: new Date() },
+      { _id: 1,
+        clickCount: 1,
+        username: "levi.broadnax",
+        created: new Date()
+      },
     ];
   }
 
@@ -19,14 +24,12 @@ export default class App extends Component {
 
   render() {
     return (
-
       <div className="clickContainer">
-
-      <AccountsUIWrapper />
-        <header>
+        <header>{/* all cases */}
           <h1>Clicking is fun!</h1>
         </header>
-        <button>Click Me</button>
+        <AccountsUIWrapper />{/* not logged in */}
+        <button>Click Me</button>{/* only logged in */}
         <div>
           {this.renderClicks()}
         </div>
