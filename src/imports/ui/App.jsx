@@ -1,23 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Meteor } from 'meteor/meteor';
-import Click from './Click.jsx';
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-// App component - represents the whole app
-export default class App extends Component {
 
-  getClicks() {
-    return [
-      { _id: 1,
-        clickCount: 1,
-        username: "levi.broadnax",
-        created: new Date()
-      },
-    ];
-  }
+import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
+
+import Click from './Click.jsx';
+
+// @TODO import DAO to access values from DB
+
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+
+// App component - represents the whole app
+class App extends Component {
 
   renderClicks() {
-    return this.getClicks().map((click) => (
+    return this.props.clicks.map((click) => (
       <Click key={click._id} click={click} />
     ));
   }
@@ -37,3 +34,12 @@ export default class App extends Component {
     );
   }
 }
+App.propTypes = {
+  clicks: PropTypes.Object.isRequired,
+};
+
+export default createContainer(() => {
+  return {
+    clicks: Clicks.find({}).fetch(),
+  };
+}, App);
