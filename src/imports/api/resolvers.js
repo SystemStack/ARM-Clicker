@@ -21,7 +21,7 @@ export default resolvers = {
   },
 
   Mutation: {
-    incrementClicks(_, { email }) {
+    incrementClick(_, { email }) {
       let _user = find(User, { Email: email });
       if(!_user) {
         throw new Error(`Could not find your account with Email ${email}`);
