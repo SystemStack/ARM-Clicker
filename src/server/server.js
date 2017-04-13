@@ -5,10 +5,10 @@ import typeDefs from '/imports/api/schema';
 import resolvers from '/imports/api/resolvers';
 
 const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers
+  typeDefs,
+  resolvers
 });
 
 createApolloServer({
-    schema
+  schema
 });

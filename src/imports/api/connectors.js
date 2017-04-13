@@ -4,9 +4,9 @@ import Sequelize from 'sequelize';
 // create the connection
 // If you have changed your default user/password from
 // 'root'/no password, then set that here (and keep it a secret!)
-const db = new Sequelize('ARMClicker', 'root', null, {
-    host: 'localhost',
-    dialect: 'mysql'
+const db = new Sequelize('ARMTest', 'root', null, {
+  host: 'localhost',
+  dialect: 'mysql'
 });
 
 // Model of a user logging in
@@ -15,34 +15,65 @@ const db = new Sequelize('ARMClicker', 'root', null, {
 //@Salt: Random UUID on account creation and password change
 //@Hash: Match with hash/salt
 //@Click_Count: Integer greater than zero of times clicked
-const LoginPostModel = db.define('loginPost', {
-    UserName   : {
-                    type          : Sequelize.STRING,
-                    isAlphanumeric: true
-                  },
-    Email       : {
-                    type   : Sequelize.STRING,
-                    isEmail: true,
-                  },
-    Salt        : { type: Sequelize.STRING },
-    Hash        : { type: Sequelize.STRING },
-    Token       : { type: Sequelize.STRING },
+// const LoginModel = db.define('login', {
+//   UserName: {
+//                type          : Sequelize.STRING,
+//                isAlphanumeric: true
+//              },
+//   Email    : {
+//                type   : Sequelize.STRING,
+//                isEmail: true,
+//              },
+//   Salt     : { type: Sequelize.STRING },
+//   Hash     : { type: Sequelize.STRING },
+//   Token    : { type: Sequelize.STRING },
+// });
+
+// // Model of a click
+// const ClickModel = db.define('click', {
+//   Email      : { type: Sequelize.STRING },
+//   UserName   : { type: Sequelize.STRING },
+//   TimeClicked: {
+//                  defaultValue: Sequelize.NOW,
+//                  type        : Sequelize.DATE,
+//                },
+// });
+// Grab all info - testing only
+const TestUserModel = db.define('UserModelTest', {
+  UserName  : { type: Sequelize.STRING },
+  Email     : { type: Sequelize.STRING },
+  ClickCount: {
+                defaultValue: 0,
+                type        : Sequelize.INTEGER,
+              },
 });
 
-// Model of a click
-// Not using default timestamps because we will not update these records
-const ClickPostModel = db.define('clickPost', {
-    Email        : { type: Sequelize.STRING },
-    TimeClicked : {
-                      type        : Sequelize.DATE,
-                      defaultValue: Sequelize.NOW
-                   },
+const TestUserLoginModel = db.define('UserLoginTest', {
+  UserName : { type: Sequelize.STRING },
+  Email    : { type: Sequelize.STRING },
+  Salt     : { type: Sequelize.STRING },
+  Hash     : { type: Sequelize.STRING },
+  Token    : { type: Sequelize.STRING },
 });
+
+const TestClickModel = db.define('UserClickTest', {
+  UserName   : { type: Sequelize.STRING },
+  Email      : { type: Sequelize.STRING },
+  TimeClicked: {
+                 defaultValue: Sequelize.NOW,
+                 type        : Sequelize.DATE,
+               },
+});
+
 
 // create the table if it doesn't exist yet
 db.sync();
 
 // export models
-const ClickPost = db.models.loginPost;
-const LoginPost = db.models.clickPost;
-export { ClickPost, LoginPost };
+// const Click = db.models.login;
+// const Login = db.models.click;
+// export { Click, Login };
+const testUser  = db.models.UserModelTest;
+const testLogin = db.models.UserLoginTest;
+const testClick = db.models.UserClickTest;
+export{testUser, testLogin, testClick};
