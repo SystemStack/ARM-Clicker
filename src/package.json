@@ -19,8 +19,10 @@
     "graphql-typings": "0.0.1-beta-2",
     "meteor-node-stubs": "~0.2.4",
     "mysql": "^2.13.0",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-addons-pure-render-mixin": "^15.5.2",
+    "react-addons-update": "^15.5.2",
     "react-apollo": "^1.0.1",
     "react-dom": "^15.5.4",
     "sequelize": "^3.30.4"

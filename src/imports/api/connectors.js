@@ -1,79 +1,65 @@
-//citation https://blog.meteor.com/create-a-simple-hello-world-app-with-meteor-and-apollo-64bab66a456f
+//citations:
+// https://blog.meteor.com/create-a-simple-hello-world-app-with-meteor-and-apollo-64bab66a456f
+// https://docs.sequelizejs.com/en/v3/docs/models-definition/#definition
 import Sequelize from 'sequelize';
 
-// create the connection
 // If you have changed your default user/password from
 // 'root'/no password, then set that here (and keep it a secret!)
-const db = new Sequelize('ARMTest', 'root', null, {
+const db = new Sequelize('ARMClicker', 'root', null, {
   host: 'localhost',
   dialect: 'mysql'
 });
 
 // Model of a user logging in
-//@User_Name: Alphanumeric string
-//@Email: Email string
-//@Salt: Random UUID on account creation and password change
-//@Hash: Match with hash/salt
-//@Click_Count: Integer greater than zero of times clicked
-// const LoginModel = db.define('login', {
-//   UserName: {
-//                type          : Sequelize.STRING,
-//                isAlphanumeric: true
-//              },
-//   Email    : {
-//                type   : Sequelize.STRING,
-//                isEmail: true,
-//              },
-//   Salt     : { type: Sequelize.STRING },
-//   Hash     : { type: Sequelize.STRING },
-//   Token    : { type: Sequelize.STRING },
-// });
-
-// // Model of a click
-// const ClickModel = db.define('click', {
-//   Email      : { type: Sequelize.STRING },
-//   UserName   : { type: Sequelize.STRING },
-//   TimeClicked: {
-//                  defaultValue: Sequelize.NOW,
-//                  type        : Sequelize.DATE,
-//                },
-// });
-// Grab all info - testing only
-const TestUserModel = db.define('UserModelTest', {
-  UserName  : { type: Sequelize.STRING },
-  Email     : { type: Sequelize.STRING },
-  ClickCount: {
-                defaultValue: 0,
-                type        : Sequelize.INTEGER,
+//@UserName: Unique and required username,
+//@Email: Unique Email
+//@ClickCount: Integer >0, times a user has clicked
+const UserModel = db.define('Users', {
+  id:         {
+                type         : Sequelize.INTEGER,
+                primaryKey   : true
               },
+  UserName:   {
+                type         : Sequelize.STRING,
+                allowNull    : false,
+                unique       : true
+              },
+  Email:      {
+                type         : Sequelize.STRING,
+                unique       : true
+              },
+  ClickCount: {
+                type         : Sequelize.INTEGER,
+                defaultValue : 0
+              },
+}, {
+    timestamps: false
 });
-
-const TestUserLoginModel = db.define('UserLoginTest', {
-  UserName : { type: Sequelize.STRING },
-  Email    : { type: Sequelize.STRING },
-  Salt     : { type: Sequelize.STRING },
-  Hash     : { type: Sequelize.STRING },
-  Token    : { type: Sequelize.STRING },
+// Model of a click
+const ClickModel = db.define('UserClicks', {
+  id:         {
+                type         : Sequelize.INTEGER,
+                primaryKey   : true
+              },
+  // This is a foreign key constraint, a click cannot exist without a user
+  UserID:     {
+                type : Sequelize.INTEGER,
+                references: {
+                  model: db.models.Users,
+                  key  : 'id'
+                }
+              },
+  TimeClicked:{
+                type         : Sequelize.DATE,
+                defaultValue : Sequelize.NOW
+              },
+}, {
+    timestamps: false
 });
-
-const TestClickModel = db.define('UserClickTest', {
-  UserName   : { type: Sequelize.STRING },
-  Email      : { type: Sequelize.STRING },
-  TimeClicked: {
-                 defaultValue: Sequelize.NOW,
-                 type        : Sequelize.DATE,
-               },
-});
-
 
 // create the table if it doesn't exist yet
 db.sync();
-
-// export models
-// const Click = db.models.login;
-// const Login = db.models.click;
-// export { Click, Login };
-const testUser  = db.models.UserModelTest;
-const testLogin = db.models.UserLoginTest;
-const testClick = db.models.UserClickTest;
-export{testUser, testLogin, testClick};
+// export models to be used in resolvers
+const User  = db.models.Users;
+const Click = db.models.UserClicks;
+export{ User, Click };
