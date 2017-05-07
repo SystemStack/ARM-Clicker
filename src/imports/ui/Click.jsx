@@ -1,18 +1,23 @@
-import React, { Component, PropTypes } from 'react';
-
-// Click component - Shows information about last click
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 export default class Click extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    //@TODO Get a best practice for separating a string with spaces
     return (
-      <p>{this.props.click.name}&nbsp;
-         has clicked&nbsp;
-         {this.props.click.clickCount}&nbsp;
-         times</p>
-    );
+      <div>
+        {this.props.click.UserID}
+      </div>
+    )
   }
 }
 
+// Click requires props with a click attribute with a content attribute of type string
+// https://facebook.github.io/react/docs/typechecking-with-proptypes.html
 Click.propTypes = {
-  click: PropTypes.object.isRequired,
+    click: PropTypes.shape({
+        UserID: PropTypes.number
+    }).isRequired
 };
