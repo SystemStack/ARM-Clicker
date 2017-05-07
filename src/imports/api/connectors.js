@@ -15,7 +15,7 @@ db.sync();
 // @Email: Unique Email
 // @ClickCount: Integer >0, times a user has clicked
 const UserModel = db.define('Users', {
-  id:         {
+  UserID:     {
                 type         : Sequelize.INTEGER,
                 primaryKey   : true
               },
@@ -47,7 +47,7 @@ const ClickModel = db.define('UserClicks', {
    * otherwise we will limit users to one click per second
    * because of
    */
-  id:         {
+  ClickID:    {
                 type         : Sequelize.INTEGER,
                 primaryKey   : true,
                 autoIncrement: true
@@ -57,7 +57,7 @@ const ClickModel = db.define('UserClicks', {
                 type : Sequelize.INTEGER,
                 references: {
                   model: db.models.Users,
-                  key  : 'id'
+                  key  : 'UserID'
                 }
               },
   TimeClicked:{

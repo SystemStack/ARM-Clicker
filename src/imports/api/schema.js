@@ -5,7 +5,7 @@ export default `
   scalar Date
   # Create User and Click models that reflect our DB schema
   type User {
-    id: Int
+    UserID: Int
     UserName: String
     Email: String
     ClickCount: Int
@@ -14,7 +14,7 @@ export default `
 
   # Define a TimeClicked Custom Scalar type
   type Click {
-    id: Int
+    ClickID: Int
     TimeClicked: Date
     user: User
   }
@@ -29,7 +29,7 @@ export default `
   # @TODO mutation for if a user adds an email after account creation
   type Mutation {
     incrementClick (
-      id: Int,
+      ClickID: Int,
       UserID: Int,
       TimeClicked: Date
     ): Click

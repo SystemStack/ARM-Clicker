@@ -3,41 +3,50 @@ import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 
 export default resolvers = {
-  // Queries from
+  // Queries from schema.js
   Query: {
     users(_, args) {
-      return User.findAll({where: args});
+      return User.findAll({
+        where: args
+      });
     },
     clicks(_, args) {
-      return Click.findAll({where: args});
+      return Click.findAll({
+        where: args
+      });
     }
   },
   Mutation: {
-    /* @TODO implement an incrementation on the user column,
-     * Alternatively
-     */
     incrementClick(_, args) {
-      // let _user = findUserByID(testUser, { UserID: userID });
-      // if(!_user) {
-      //   throw new Error(`Could not find your account`);
-      // }
-      // _user.ClickCount += 1;
-      return Click.create(args);
+      User.find(args)
+        .then(function(_user) {
+          User.update({
+            ClickCount: _user.get('ClickCount') + 1
+          }, {
+            where: args
+          }).then(function() {
+            return Click.create(args);
+          }).catch(function() {
+            throw new Error(`Could not update your click count`);
+          });
+          // All promises within handlers must have a return.
+          // citation: http://goo.gl/rRqMUw
+          return _user;
+        }).catch(function() {
+          throw new Error(`Could not find your account`);
+        });
     }
   },
   // https://facebook.github.io/graphql/#sec-Naming-conventions
-  // Handling of the Date scalar from Schema.js
+  // Handling of the 'scalar Date' from Schema.js
   Date: {
     __parseValue(value) {
-      console.log("parseValue", value)
       return new Date(value); // value from the client
     },
     __serialize(value) {
-      //Sat Apr 22 2017 17:41:45 GMT-0500 (Central Daylight Time)
       return value.getTime(); // value sent to the client
     },
     __parseLiteral(ast) {
-      console.log("parseLiteral", ast)
       if (ast.kind === Kind.INT) {
         return parseInt(ast.value, 10); // ast value is always in string format
       }
