@@ -5,6 +5,9 @@
   * [Meteor For Windows](https://www.meteor.com/install, "Meteor for Windows")
   * MySQL
 #### Install/Run instructions
+  * Create the MySQL database where you want the tables to be created: 
+   * >$ mysql -u root
+   * >mysql> CREATE DATABASE armclicker;
   * Clone this repository and navigate to the /src directory
   * Install all dependencies: `meteor npm install`
   * Run `meteor` and point your browser to `localhost:3000`
