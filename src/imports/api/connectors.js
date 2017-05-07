@@ -9,37 +9,48 @@ const db = new Sequelize('ARMClicker', 'root', null, {
   host: 'localhost',
   dialect: 'mysql'
 });
-
+db.sync();
 // Model of a user logging in
-//@UserName: Unique and required username,
-//@Email: Unique Email
-//@ClickCount: Integer >0, times a user has clicked
+// @UserName: Unique and required username,
+// @Email: Unique Email
+// @ClickCount: Integer >0, times a user has clicked
 const UserModel = db.define('Users', {
   id:         {
                 type         : Sequelize.INTEGER,
                 primaryKey   : true
               },
   UserName:   {
-                type         : Sequelize.STRING,
-                allowNull    : false,
-                unique       : true
+                type          : Sequelize.STRING,
+                allowNull     : false,
+                unique        : true,
+                isAlphanumeric: true
               },
   Email:      {
                 type         : Sequelize.STRING,
-                unique       : true
+                unique       : true,
+                isEmail      : true
               },
+  /* It may be possible to replace this column with a query
+   * SELECT COUNT(*) FROM userclicks WHERE users.id=userclicks.UserID
+   */
   ClickCount: {
                 type         : Sequelize.INTEGER,
-                defaultValue : 0
-              },
+                defaultValue : 0,
+                min          : 0
+              }
 }, {
     timestamps: false
 });
 // Model of a click
 const ClickModel = db.define('UserClicks', {
+  /* It is important to set an ID here,
+   * otherwise we will limit users to one click per second
+   * because of
+   */
   id:         {
                 type         : Sequelize.INTEGER,
-                primaryKey   : true
+                primaryKey   : true,
+                autoIncrement: true
               },
   // This is a foreign key constraint, a click cannot exist without a user
   UserID:     {
@@ -50,16 +61,18 @@ const ClickModel = db.define('UserClicks', {
                 }
               },
   TimeClicked:{
+                primaryKey   : true,
                 type         : Sequelize.DATE,
                 defaultValue : Sequelize.NOW
-              },
+              }
 }, {
     timestamps: false
 });
 
 // create the table if it doesn't exist yet
 db.sync();
+
 // export models to be used in resolvers
 const User  = db.models.Users;
 const Click = db.models.UserClicks;
-export{ User, Click };
+export { User, Click };

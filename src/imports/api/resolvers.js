@@ -1,4 +1,4 @@
- import { User, Click } from './connectors';
+import { User, Click } from './connectors';
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 
@@ -13,15 +13,17 @@ export default resolvers = {
     }
   },
   Mutation: {
-    incrementClick(_, { args }) {
+    /* @TODO implement an incrementation on the user column,
+     * Alternatively
+     */
+    incrementClick(_, args) {
       // let _user = findUserByID(testUser, { UserID: userID });
       // if(!_user) {
       //   throw new Error(`Could not find your account`);
       // }
       // _user.ClickCount += 1;
-      // console.log("incrementClick", _user)
       return Click.create(args);
-    },
+    }
   },
   // https://facebook.github.io/graphql/#sec-Naming-conventions
   // Handling of the Date scalar from Schema.js
