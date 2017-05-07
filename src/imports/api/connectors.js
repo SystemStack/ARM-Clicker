@@ -16,55 +16,44 @@ db.sync();
 // @ClickCount: Integer >0, times a user has clicked
 const UserModel = db.define('Users', {
   UserID:     {
-                type         : Sequelize.INTEGER,
-                primaryKey   : true
+                type          : Sequelize.INTEGER,
+                primaryKey    : true,
+                autoIncrement : true
               },
   UserName:   {
-                type          : Sequelize.STRING,
-                allowNull     : false,
-                unique        : true,
-                isAlphanumeric: true
+                type           : Sequelize.STRING,
+                allowNull      : false,
+                unique         : true,
+                isAlphanumeric : true
               },
   Email:      {
-                type         : Sequelize.STRING,
-                unique       : true,
-                isEmail      : true
+                type    : Sequelize.STRING,
+                unique  : true,
+                isEmail : true
               },
-  /* It may be possible to replace this column with a query
-   * SELECT COUNT(*) FROM userclicks WHERE users.id=userclicks.UserID
-   */
   ClickCount: {
-                type         : Sequelize.INTEGER,
-                defaultValue : 0,
-                min          : 0
+                type          : Sequelize.INTEGER,
+                defaultValue  : 0,
+                min           : 0
               }
 }, {
     timestamps: false
 });
 // Model of a click
 const ClickModel = db.define('UserClicks', {
-  /* It is important to set an ID here,
-   * otherwise we will limit users to one click per second
-   * because of
-   */
-  ClickID:    {
-                type         : Sequelize.INTEGER,
-                primaryKey   : true,
-                autoIncrement: true
-              },
-  // This is a foreign key constraint, a click cannot exist without a user
-  UserID:     {
-                type : Sequelize.INTEGER,
-                references: {
-                  model: db.models.Users,
-                  key  : 'UserID'
-                }
-              },
-  TimeClicked:{
-                primaryKey   : true,
-                type         : Sequelize.DATE,
-                defaultValue : Sequelize.NOW
-              }
+  // This is a  foreign key constraint, a click cannot exist without a user
+  UserID:      {
+                 type       : Sequelize.INTEGER,
+                 references : {
+                                model : db.models.Users,
+                                key  : 'UserID'
+                              }
+               },
+  TimeClicked: {
+                 primaryKey   : true,
+                 type         : Sequelize.DATE,
+                 defaultValue : Sequelize.NOW
+               }
 }, {
     timestamps: false
 });
