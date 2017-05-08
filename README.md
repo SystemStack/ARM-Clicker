@@ -11,7 +11,10 @@
   * Clone this repository and navigate to the /src directory
   * Install all dependencies: `meteor npm install`
   * Run `meteor` and point your browser to `localhost:3000`
-### API
+### To Test the API
+ * Navigate to `http://localhost:3000/graphiql`
+ * Add the below queries and mutators to your query editor
+ * Add desired query variables
 #### Create User => User
 ```
 mutation createUser($UserName: String!, $Email: String) {
@@ -55,6 +58,14 @@ query getClicksByUserID($UserID: Int!) {
     TimeClicked
     UserClickNumber
   }
+}
+```
+#### Query Variables Format
+```
+{
+  "UserName": "levi",
+  "Email": "levibroadnax@gmail.com",
+  "UserID": 1
 }
 ```
 ### FlowChart
