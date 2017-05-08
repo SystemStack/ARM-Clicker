@@ -11,5 +11,51 @@
   * Clone this repository and navigate to the /src directory
   * Install all dependencies: `meteor npm install`
   * Run `meteor` and point your browser to `localhost:3000`
+### API
+#### Create User => User
+```
+mutation createUser($UserName: String!, $Email: String) {
+  createUser(UserName: $UserName, Email: $Email) {
+    UserName
+    Email
+    UserID
+  }
+}
+```
+#### Update Users Email => 1|0 (Rows Updated)
+```
+mutation emailUp($UserName: String!, $Email: String!) {
+  updateEmail(UserName: $UserName, Email: $Email)
+}
+```
+#### Create Click, Update A Users Click Count => Click
+```
+mutation insertClick($UserID: Int!) {
+  incrementClick(UserID: $UserID) {
+    TimeClicked
+    UserClickNumber
+  }
+}
+```
+#### Find User By Username Or Email => User
+```
+query getUserByName($UserName: String!, $Email: String) {
+  users(UserName: $UserName, Email: $Email) {
+    UserID: UserID
+    Email
+    UserName
+    ClickCount
+  }
+}
+```
+#### Find All Clicks By User => [Clicks]
+```
+query getClicksByUserID($UserID: Int!) {
+  clicks(UserID: $UserID) {
+    TimeClicked
+    UserClickNumber
+  }
+}
+```
 ### FlowChart
 ![Alt](ARM_clicker_flowchart.png)
