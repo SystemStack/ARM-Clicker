@@ -1,14 +1,11 @@
-import React, { Component  } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component  } from 'react';
+import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import ReactDOM from 'react-dom';
 
-import ClicksContainer from './clickContainer'
-import Click from './Click.jsx';
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-import buttonClickContainer from './buttonClickContainer.jsx';
-
+import AccountsUIWrapper from './AccountsUIWrapper';
+import ClickContainer from './ClickContainer';
 // App component - represents the whole app
 export default class App extends Component {
   constructor(props) {
@@ -22,11 +19,14 @@ export default class App extends Component {
           <h1>Clicking is fun!</h1>
         </header>
         <div className="row">
-          <ClicksContainer className="col s4" />
-          <buttonClickContainer className="col s4" />
+          <ClickContainer className="col s4" />
           <AccountsUIWrapper className="col s4" />
         </div>
       </div>
     );
   }
 }
+
+App.propTypes = {
+  currentUser: PropTypes.object,
+};

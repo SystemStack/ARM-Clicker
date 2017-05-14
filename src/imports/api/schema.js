@@ -46,7 +46,7 @@ export default `
     # Mutations to increase the click count of a user and
     # adds a click to the Click table
     incrementClick (
-      UserID : Int!
+      UserName : String!
     ): Click
   }
 
