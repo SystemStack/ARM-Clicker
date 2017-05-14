@@ -1,6 +1,6 @@
-import { User, Click } from './connectors';
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
+import { User, Click } from './connectors';
 export default resolvers = {
   // Queries from schema.js
   Query: {
@@ -36,8 +36,8 @@ export default resolvers = {
           where: {
             UserName: args.UserName
           }
-        }).then(function (_affected) {
-          return _affected;
+        }).then(function (_affectedRowCount) {
+          return _affectedRowCount;
         }).catch(function () {
           throw new Error(`Could not update your Email`);
         });
@@ -54,7 +54,7 @@ export default resolvers = {
               where: args
             }).then(function () {
               return Click.create({
-                UserID: args.UserID,
+                UserID: _user.get('UserID'),
                 UserClickNumber: _user.get('ClickCount') + 1
               }).catch(function () {
                 throw new Error(`Could not update your click count`);
