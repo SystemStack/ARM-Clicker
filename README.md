@@ -5,7 +5,7 @@
   * [Meteor For Windows](https://www.meteor.com/install, "Meteor for Windows")
   * MySQL
 #### Install/Run instructions
-  * Create the MySQL database where you want the tables to be created: 
+  * Create the MySQL database where you want the tables to be created:
    * >$ mysql -u root
    * >mysql> CREATE DATABASE armclicker;
   * Clone this repository and navigate to the /src directory
@@ -33,8 +33,8 @@ mutation emailUp($UserName: String!, $Email: String!) {
 ```
 #### Create Click, Update A Users Click Count => Click
 ```
-mutation insertClick($UserID: Int!) {
-  incrementClick(UserID: $UserID) {
+mutation insertClick($UserName: String!) {
+  incrementClick(UserName: $UserName) {
     TimeClicked
     UserClickNumber
   }

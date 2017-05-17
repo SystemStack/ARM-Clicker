@@ -1,10 +1,9 @@
-import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { render } from 'react-dom';
-
 import ApolloClient, { addTypename } from 'apollo-client';
-import { meteorClientConfig } from 'meteor/apollo';
+import React from 'react';
 import { ApolloProvider } from 'react-apollo';
+import { Meteor } from 'meteor/meteor';
+import { meteorClientConfig } from 'meteor/apollo';
+import { render } from 'react-dom';
 
 import '../imports/startup/accounts-config.js';
 import App from '../imports/ui/App.jsx';
@@ -26,5 +25,3 @@ Meteor.startup(() => {
          </ApolloProvider>, document.getElementById('ArmClicker')
          );
 });
-
-
