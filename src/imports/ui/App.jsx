@@ -17,25 +17,22 @@ class App extends Component {
     return (
       <div>
         <header>
-          <h1>Clicking is fun!</h1>
+          <h1>ARM - Clicking is fun!</h1>
         </header>
         {this.props.currentUser/*if the user is logged in, show them the chart/button/logout UI*/
-          ?
-            <div className="row">
+          ? <div className="row">
               <AccountsUIWrapper className="col s4" />
               <ClickContainer className="col s4" />
               <ChartContainer className="col s4"/>
             </div>
-          :
-            <AccountsUIWrapper className="col s4" />
-        }
+          : <AccountsUIWrapper className="col s4" />}
       </div>
     );
   }
 }
 
 App.propTypes = {
-  currentUser: PropTypes.object,
+  currentUser: PropTypes.object
 };
 
 export default createContainer(() => {

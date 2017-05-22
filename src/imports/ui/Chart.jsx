@@ -5,24 +5,9 @@ import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
 export default class Chart extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      UserName: "test1"
-    };
   }
 
-  handleSearch () {
-    this.props.variables.UserName
-      = this.props.UserName
-      = this.state.UserName.value;
-    console.log(this.props);
-    x = this
-      .props
-      .data
-      .startPolling(1000);
-    console.log(x);
-  }
-
-  clickHelper (_usersClicks) {
+  chartHelper (_usersClicks) {
     return _usersClicks
       .map(v => ({
         Clicks: v.UserClickNumber,
@@ -30,7 +15,7 @@ export default class Chart extends Component {
       }));
   }
 
-  //This may change to something more advanced in the future, e.g. stratifying dates into buckets
+  //We may make the X-axis more advanced in the future, e.g. stratifying dates into buckets
   dateHelper (_millis) {
     let _date = new Date(_millis);
     return _date.toDateString();
@@ -39,11 +24,7 @@ export default class Chart extends Component {
   render() {
     return (
       <div>
-        <input ref={(c) => this.state.UserName = c}
-               placeholder="Search for a friend!"
-               type="text"
-               onChange={this.handleSearch}/>
-        <AreaChart width={600} height={400} data={this.clickHelper(this.props.clicks)}
+        <AreaChart width={window.innerWidth} height={window.innerHeight*.65} data={this.chartHelper(this.props.clicks)}
                    margin={{top: 10, right: 30, left: 0, bottom: 0}}>
           <Area type='monotone' dataKey='Clicks' stroke='#8884d8' fill='#8884d8' />
           <CartesianGrid strokeDasharray="3 3"/>
@@ -59,7 +40,8 @@ export default class Chart extends Component {
 Chart.defaultProps = {
   clicks: Array()
 }
-// clicks is an array of clcik objects
+
+// clicks is an array of click objects
 // [{UserName: String TimeClicked: String, UserClickNumber: KEY(string)},...]
 Chart.propTypes = {
   clicks: PropTypes.array.isRequired
