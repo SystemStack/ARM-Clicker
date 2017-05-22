@@ -35,7 +35,7 @@ export default `
       Email    : String
     ): User
 
-  # Updates a users email by their username
+    # Updates a users email by their username
     # MySQL updates can only return rows effected (0|1)
     updateEmail (
       UserName : String!,
