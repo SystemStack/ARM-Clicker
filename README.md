@@ -44,7 +44,7 @@ mutation insertClick($UserName: String!) {
 ```
 query getUserByName($UserName: String!, $Email: String) {
   users(UserName: $UserName, Email: $Email) {
-    UserID: UserID
+    UserID
     Email
     UserName
     ClickCount
@@ -53,8 +53,8 @@ query getUserByName($UserName: String!, $Email: String) {
 ```
 #### Find All Clicks By User => [Clicks]
 ```
-query getClicksByUserID($UserID: Int!) {
-  clicks(UserID: $UserID) {
+query getClicksByUserName($UserName: String!) {
+  clicks(UserName: $UserName) {
     TimeClicked
     UserClickNumber
   }
