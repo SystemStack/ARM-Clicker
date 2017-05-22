@@ -10,18 +10,22 @@ class Charts extends Component {
   constructor(props) {
     super(props);
     this.handleSearch = this.handleSearch.bind(this);
-    this.state = { UserName: "" };
+    this.state = {
+      UserName: ""
+    }
   }
 
   handleSearch () {
-    this.setState({UserName: this.UserName.value});
+    this.props.data.refetch({
+      UserName: this.state.UserName.value
+    });
   }
 
   render() {
     return (
       <div>
-        <input ref={(c) => this.UserName = c}
-               placeholder="chart container"
+        <input ref={(c) => this.state.UserName = c}
+               placeholder="Search for your friends by their User Name!"
                type="text"
                onChange={this.handleSearch}/>
         <Chart clicks={this.props.data.clicks} />
@@ -37,11 +41,12 @@ Charts.propTypes = {
   }).isRequired
 };
 
-// Define the graphql query to retrieve the charts and the desired attributes
+// gql to grab all of a users clicks by their username
+// Note: It is possible to project Username out of clicks as well,
+//    may be interesting for comparative graphing
 const allCharts = gql`
-  query getUserByName($UserName: String) {
+  query getUserByName($UserName: String!) {
     clicks (UserName: $UserName) {
-      UserName
       TimeClicked
       UserClickNumber
     }
@@ -51,7 +56,7 @@ const allCharts = gql`
 // Use the graphql container to run the allCharts query and pass the results to ChartsContainer
 export default ChartContainer = graphql(allCharts, {
   options: {
-             pollInterval: 5000,
-             variables: {UserName: "test1"}
-           }
+   pollInterval: 1000,
+   variables: {UserName: this.UserName}
+  }
 })(Charts);
