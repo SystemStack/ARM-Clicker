@@ -27,13 +27,11 @@ export default class Click extends Component {
   render() {
     return (
       <div className="row">
-      {this.state.clickCount ===0 ?
-       <button onClick={this.handleClick}>Start Clicking!</button>
-      :<button onClick={this.handleClick}>
+        <button onClick={this.handleClick}>
           You have clicked&nbsp;
             {this.state.clickCount}&nbsp;
             {this.state.clickCount===1 ? "time" : "times"}
-        </button>}
+        </button>
       </div>
     );
   }
