@@ -42,7 +42,7 @@ Chart.defaultProps = {
 }
 
 // clicks is an array of click objects
-// [{UserName: String TimeClicked: String, UserClickNumber: KEY(string)},...]
+// [{TimeClicked: String, UserClickNumber: KEY(string)},...]
 Chart.propTypes = {
   clicks: PropTypes.array.isRequired
 };
