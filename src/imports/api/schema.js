@@ -6,27 +6,26 @@ export default `
   # in your local time
   scalar Date
 
-  # A User has a unique ID and unique Username.
+  # A User has a unique username.
   type User {
-    UserID     : Int
     UserName   : String
     Email      : String
     ClickCount : Int
-    Clicks     : [Click] # These are all of the Clicks by a user
+    Clicks: [Click] # These are all of the Clicks by a user
   }
 
-  # A UserID is stored in our MySQL datatbase and creates a link between
+  # A UserName is stored in our MySQL database and creates a link between
   # this table and the User table.
   type Click {
     TimeClicked     : Date
     UserClickNumber : Int
-    user            : User
+    UserName        : String
   }
 
   # This is the format for the queries in resolvers.js
   type Query {
-    users(UserName: String, Email: String) : [User]
-    clicks(UserID: Int)                    : [Click]
+    users(UserName: String, Email: String)  : [User]
+    clicks(UserName: String, Email: String) : [Click]
   }
 
   type Mutation {
@@ -36,7 +35,7 @@ export default `
       Email    : String
     ): User
 
-    # Updates a users email by their username
+  # Updates a users email by their username
     # MySQL updates can only return rows effected (0|1)
     updateEmail (
       UserName : String!,

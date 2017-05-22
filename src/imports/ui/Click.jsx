@@ -38,5 +38,5 @@ export default class Click extends Component {
 }
 
 Click.propTypes = {
-  submit  : PropTypes.func.isRequired
+  submit : PropTypes.func.isRequired
 };

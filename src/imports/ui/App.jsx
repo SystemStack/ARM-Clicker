@@ -5,6 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
 import AccountsUIWrapper from './AccountsUIWrapper';
+import ChartContainer from './ChartContainer';
 import ClickContainer from './ClickContainer';
 // App component - represents the whole app
 export default class App extends Component {
@@ -19,8 +20,9 @@ export default class App extends Component {
           <h1>Clicking is fun!</h1>
         </header>
         <div className="row">
-          <ClickContainer className="col s4" />
           <AccountsUIWrapper className="col s4" />
+          <ClickContainer className="col s4" />
+          <ChartContainer className="col s4"/>
         </div>
       </div>
     );
