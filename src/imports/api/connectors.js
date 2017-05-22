@@ -15,13 +15,9 @@ db.sync();
 // @Email: Unique Email
 // @ClickCount: Integer >0, times a user has clicked
 const UserModel = db.define('Users', {
-  UserID: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
   UserName: {
     type: Sequelize.STRING,
+    primaryKey: true,
     allowNull: false,
     unique: true,
     isAlphanumeric: true
@@ -42,13 +38,13 @@ const UserModel = db.define('Users', {
 // Model of a click
 const ClickModel = db.define('UserClicks', {
   // This is a foreign key constraint, a click cannot exist without a user
-  UserID: {
-    type: Sequelize.INTEGER,
+  UserName: {
+    type: Sequelize.STRING,
     primaryKey: true,
     unique: 'compositeIndex',
     references: {
       model: db.models.Users,
-      key: 'UserID'
+      key: 'UserName'
     }
   },
   // Viewing the click number is useful for graphing purposes

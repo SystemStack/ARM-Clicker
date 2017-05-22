@@ -7,11 +7,15 @@ export default resolvers = {
     users(_, args) {
       return User.findAll({
         where: args
+      }).then((_user) => {
+        return _user;
       });
     },
     clicks(_, args) {
       return Click.findAll({
         where: args
+      }).then((_clicks) => {
+        return _clicks;
       });
     }
   },
@@ -21,9 +25,9 @@ export default resolvers = {
     createUser(_, args) {
       return User
         .create(args)
-        .then(function (_user) {
+        .then((_user) => {
           return _user;
-        }).catch(function () {
+        }).catch(() => {
           throw new Error(`Could not create your account (UserName or Email already exists)`);
         });
     },
@@ -36,9 +40,9 @@ export default resolvers = {
           where: {
             UserName: args.UserName
           }
-        }).then(function (_affectedRowCount) {
+        }).then((_affectedRowCount) => {
           return _affectedRowCount;
-        }).catch(function () {
+        }).catch(() => {
           throw new Error(`Could not update your Email`);
         });
     },
@@ -46,23 +50,23 @@ export default resolvers = {
     incrementClick(_, args) {
       return User
         .find({ where: args })
-        .then(function (_user) {
+        .then((_user) => {
           return User
             .update({
               ClickCount: _user.get('ClickCount') + 1
             }, {
               where: args
-            }).then(function () {
+            }).then(() => {
               return Click.create({
-                UserID: _user.get('UserID'),
+                UserName: _user.get('UserName'),
                 UserClickNumber: _user.get('ClickCount') + 1
-              }).catch(function () {
+              }).catch(() => {
                 throw new Error(`Could not update your click count`);
               });
-            }).catch(function () {
+            }).catch(() => {
               throw new Error(`Could not update your click count`);
             });
-        }).catch(function () {
+        }).catch((err) => {
           throw new Error(`Could not find your account`);
         });
     }

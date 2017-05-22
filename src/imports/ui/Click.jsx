@@ -19,7 +19,7 @@ export default class Click extends Component {
     this
       .props
       .submit(Meteor.user().username)
-      .then(function(_response) {
+      .then((_response) => {
         _that.setState({clickCount : _response.data.incrementClick.UserClickNumber });
     });
   }
@@ -27,16 +27,18 @@ export default class Click extends Component {
   render() {
     return (
       <div className="row">
-        <button onClick={this.handleClick}>
-          You have clicked&nbsp;
-            {this.state.clickCount}&nbsp;
-            {this.state.clickCount===1 ? "time" : "times"}
-        </button>
+        {this.state.clickCount ===0
+          ? <button onClick={this.handleClick}>Start Clicking!</button>
+          : <button onClick={this.handleClick}>
+              You have clicked&nbsp;
+              {this.state.clickCount}&nbsp;
+              {this.state.clickCount===1 ? "time" : "times"}
+            </button>}
       </div>
     );
   }
 }
 
 Click.propTypes = {
-  submit  : PropTypes.func.isRequired
+  submit : PropTypes.func.isRequired
 };
